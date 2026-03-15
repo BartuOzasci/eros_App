@@ -1,0 +1,13 @@
+export const vaccinesData = [
+  { id: 1, name: "Bronşin Aşısı", date: "2026-04-03", isCompleted: false },
+  { id: 2, name: "Köpek Karma Aşısı", date: "2026-05-05", isCompleted: false },
+  { id: 3, name: "Kuduz Aşısı", date: "2026-06-10", isCompleted: false },
+  { id: 4, name: "Kuduz Aşısı", date: "2026-04-15", isCompleted: false },
+  { id: 5, name: "Lyme Aşısı", date: "2026-06-15", isCompleted: false },
+  { id: 6, name: "İç Dış Parazit", date: "2026-01-02", isCompleted: true },
+  { id: 7, name: "İç Dış Parazit", date: "2026-03-09", isCompleted: true },
+  { id: 8, name: "İç Dış Parazit", date: "2026-05-09", isCompleted: false },
+  { id: 9, name: "İç Dış Parazit", date: "2026-07-09", isCompleted: false },
+  { id: 10, name: "İç Dış Parazit", date: "2026-09-09", isCompleted: false },
+  { id: 11, name: "İç Dış Parazit", date: "2026-11-09", isCompleted: false },
+];
