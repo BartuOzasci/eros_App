@@ -1,5 +1,5 @@
 export const vaccinesData = [
-  { id: 1, name: "Bronşin Aşısı", date: "2026-04-03", isCompleted: false },
+  { id: 1, name: "Bronşin Aşısı", date: "2026-04-06", isCompleted: true },
   { id: 2, name: "Köpek Karma Aşısı", date: "2026-05-05", isCompleted: false },
   { id: 3, name: "Kuduz Aşısı", date: "2026-06-10", isCompleted: false },
   { id: 4, name: "Kuduz Aşısı", date: "2026-04-15", isCompleted: false },
