@@ -1,3 +1,3 @@
 export const groomerData = {
-  lastVisit: "2026-04-08",
+  lastVisit: "2026-06-06",
 };
