@@ -1,52 +1,135 @@
+import { useState } from "react";
+import {
+  Stethoscope,
+  Scissors,
+  Phone,
+  MapPin,
+  Copy,
+  Check,
+  ShieldAlert,
+} from "lucide-react";
 import { contactData } from "../data/contactData";
-import { Stethoscope, Scissors, Phone, MapPin } from "lucide-react";
+import PageHeader from "../components/common/PageHeader";
 
-const ContactCard = ({ title, icon: Icon, data, bgColor }) => (
-  <div className="bg-white p-5 rounded-[30px] shadow-soft mb-6">
-    <div
-      className={`w-12 h-12 ${bgColor} rounded-full flex items-center justify-center mb-4`}
-    >
-      <Icon className="text-gray-700 w-6 h-6" />
-    </div>
-    <h3 className="text-lg font-bold text-textMain">{title}</h3>
-    <h4 className="text-md text-gray-600 mb-4">{data.name}</h4>
+/** tel: bağlantısı için numaradaki boşluk ve parantezleri temizler. */
+const toDialable = (phone) => phone.replace(/[^\d+]/g, "");
 
-    <div className="space-y-3">
-      <a
-        href={`tel:${data.phone}`}
-        className="flex items-center gap-3 text-sm text-gray-700 bg-gray-50 p-3 rounded-xl hover:bg-gray-100 transition"
-      >
-        <Phone className="w-4 h-4 text-green-500" /> {data.phone}
-      </a>
-      <a
-        href={data.mapUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="flex items-center gap-3 text-sm text-white bg-orange-400 p-3 rounded-xl hover:bg-orange-500 transition"
-      >
-        <MapPin className="w-4 h-4" /> Haritada Aç
-      </a>
-    </div>
-  </div>
-);
+const ContactCard = ({ icon: Icon, data, gradient, delay = 0 }) => {
+  const [copied, setCopied] = useState(false);
 
-const Contact = () => {
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(toDialable(data.phone));
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      /* Pano izni yoksa sessizce geç — arama bağlantısı hâlâ çalışıyor */
+    }
+  };
+
   return (
-    <div className="px-4 py-8 max-w-md mx-auto">
-      <ContactCard
-        title="Veterinerimiz"
-        icon={Stethoscope}
-        data={contactData.vet}
-        bgColor="bg-blue-100"
-      />
-      <ContactCard
-        title="Pet Kuaförümüz"
-        icon={Scissors}
-        data={contactData.groomer}
-        bgColor="bg-pink-100"
-      />
-    </div>
+    <article
+      className="surface overflow-hidden animate-fade-up"
+      style={{ animationDelay: `${delay}ms` }}
+    >
+      <div className="flex items-start gap-4 p-5">
+        <span
+          className={`grid h-14 w-14 shrink-0 place-items-center rounded-3xl text-white shadow-soft ${gradient}`}
+        >
+          <Icon className="h-7 w-7" strokeWidth={2.1} />
+        </span>
+
+        <div className="min-w-0 flex-1">
+          <p className="text-xs font-semibold uppercase tracking-[0.14em] text-ink-400">
+            {data.role}
+          </p>
+          <h2 className="mt-0.5 font-display text-lg font-bold leading-snug text-ink-800 dark:text-ink-50">
+            {data.name}
+          </h2>
+          <p className="mt-1.5 text-sm leading-relaxed text-ink-400 dark:text-ink-400">
+            {data.note}
+          </p>
+        </div>
+      </div>
+
+      <div className="space-y-2.5 px-5 pb-5">
+        {/* Numara satırı: dokununca arar, sağdaki buton panoya kopyalar */}
+        <div className="flex items-stretch gap-2">
+          <a
+            href={`tel:${toDialable(data.phone)}`}
+            className="flex flex-1 items-center gap-3 rounded-2xl bg-ink-50 px-4 py-3 text-sm font-semibold
+                       text-ink-700 transition-colors hover:bg-ink-100 dark:bg-white/5 dark:text-ink-100 dark:hover:bg-white/10"
+          >
+            <Phone className="h-4 w-4 shrink-0 text-mint-500" />
+            <span className="truncate">{data.phone}</span>
+          </a>
+
+          <button
+            type="button"
+            onClick={handleCopy}
+            aria-label={`${data.name} numarasını kopyala`}
+            className="grid w-12 shrink-0 place-items-center rounded-2xl bg-ink-50 text-ink-500
+                       transition-colors hover:bg-ink-100 active:scale-95 dark:bg-white/5
+                       dark:text-ink-300 dark:hover:bg-white/10"
+          >
+            {copied ? (
+              <Check className="h-4 w-4 text-mint-500" />
+            ) : (
+              <Copy className="h-4 w-4" />
+            )}
+          </button>
+        </div>
+
+        <a
+          href={data.mapUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="btn-primary w-full"
+        >
+          <MapPin className="h-4 w-4" />
+          Haritada Aç
+        </a>
+      </div>
+    </article>
   );
 };
+
+const Contact = () => (
+  <div className="app-container space-y-5">
+    <PageHeader
+      icon={Phone}
+      title="İletişim"
+      subtitle="Veteriner ve kuaföre tek dokunuşla ulaşın"
+      accent="sky"
+    />
+
+    <ContactCard
+      icon={Stethoscope}
+      data={contactData.vet}
+      gradient="bg-sky-gradient"
+    />
+
+    <ContactCard
+      icon={Scissors}
+      data={contactData.groomer}
+      gradient="bg-blush-gradient"
+      delay={80}
+    />
+
+    {/* ---- Acil durum hatırlatması ---- */}
+    <section
+      className="flex items-start gap-3.5 rounded-3xl border border-blush-200 bg-blush-50 p-4
+                 animate-fade-up dark:border-blush-500/20 dark:bg-blush-500/10"
+      style={{ animationDelay: "160ms" }}
+    >
+      <ShieldAlert className="h-5 w-5 shrink-0 text-blush-500" strokeWidth={2.2} />
+      <p className="text-sm leading-relaxed text-ink-600 dark:text-ink-200">
+        <strong className="font-semibold">Acil durumda</strong> önce veterineri
+        arayın. Kliniğe gitmeden önce telefonla bilgi vermek, hazırlık yapılmasını
+        sağlar.
+      </p>
+    </section>
+  </div>
+);
 
 export default Contact;

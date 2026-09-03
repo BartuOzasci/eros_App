@@ -1,0 +1,28 @@
+{
+  // Tailwind IntelliSense'in JSX içindeki sınıfları tanıması için
+  "tailwindCSS.includeLanguages": {
+    "javascript": "javascript",
+    "javascriptreact": "javascriptreact"
+  },
+  "tailwindCSS.experimental.classRegex": [
+    ["className\\s*=\\s*[\"'`]([^\"'`]*)[\"'`]", "([^\\s]+)"]
+  ],
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+
+  // @tailwind / @apply kurallarını bilinmeyen at-rule olarak işaretlemesin
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore",
+
+  "eslint.validate": ["javascript", "javascriptreact"],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+
+  "files.eol": "\n",
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true
+  }
+}
