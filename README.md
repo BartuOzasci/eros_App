@@ -1,361 +1,391 @@
-# 🐾 Eros App - Toy Poodle Web & PWA Uygulaması
-
 <div align="center">
-  <img src="public/app_icon.png" alt="Eros App Logo" width="200" height="200" />
-  
-  **Eros**, sevimli bir Toy Poodle için özel olarak tasarlanmış, modern, responsive ve PWA destekli bir web uygulaması.
-  
-  [📱 Mobil Öncelikli](#responsive-tasarım) • [🎨 Sevimli Tema](#tasarım-dili) • [⚡ Hızlı & Hafif](#teknolojiler) • [📲 PWA Desteği](#pwa-özellikleri)
+  <img src="public/app-icon.svg" alt="Eros App" width="120" height="120" />
+
+  <h1>Eros App</h1>
+
+  <p><strong>Toy Poodle Eros'un profili, aşı takvimi, kuaför döngüsü ve iletişim bilgilerini tek yerde toplayan mobil öncelikli PWA.</strong></p>
+
+  <p>
+    <img alt="React" src="https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white" />
+    <img alt="Vite" src="https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white" />
+    <img alt="Tailwind CSS" src="https://img.shields.io/badge/Tailwind-3.4-06B6D4?logo=tailwindcss&logoColor=white" />
+    <img alt="PWA" src="https://img.shields.io/badge/PWA-ready-5A0FC8?logo=pwa&logoColor=white" />
+    <img alt="Lisans" src="https://img.shields.io/badge/Lisans-MIT-green" />
+  </p>
 </div>
 
 ---
 
-## 📖 Proje Hakkında
+## İçindekiler
 
-**Eros App**, Toy Poodle cinsi bir köpek olan "Eros" için geliştirilmiş bir kişisel bilgi ve sağlık takip uygulamasıdır. Uygulama, Eros'un profilini, aşı takvimini, kuaför ziyaretlerini ve veteriner iletişim bilgilerini yönetmek için tasarlanmıştır.
-
-### Eros'un Bilgileri
-
-- **Ad:** Eros
-- **Doğum Tarihi:** 10.01.2025
-- **Irk:** Toy Poodle
-- **Ağırlık:** 3.79 Kg
-
----
-
-## ✨ Özellikler
-
-### 🏠 Hakkımda Sayfası
-
-- Eros'un sevimli profil fotoğrafı (rounded-full, şık border)
-- Detaylı bilgiler: Ad, doğum tarihi, ırk, ağırlık
-- "Pet Kimlik Kartı" stilinde tasarım
-
-### 💉 Aşılarım Sayfası (Timeline & Dinamik Renk)
-
-- Mevcut yılı başlık olarak gösteren dikey timeline UI
-- **Otomatik Kronolojik Sıralama:** Aşılar tarihine göre otomatik olarak sıralanır
-- **Dinamik Renk Algoritması:**
-  - 🟢 **Yeşil:** Aşı tamamlanmış (isCompleted: true)
-  - 🔴 **Kırmızı:** Aşı tarihi geçmiş ve yapılmamış (tarih < bugün AND isCompleted: false)
-  - ⚫ **Gri:** Aşı tarihi henüz gelmemiş
-
-### 🧴 Kuaför Sayfası (Otomatik Zaman Hesaplama)
-
-- Son kuaför ziyaret tarihi gösterilir
-- **Otomatik gün sayacı:** Bugün ile son ziyaret tarihi arasındaki gün farkı hesaplanır
-- Pastel tasarımla şık gösterim
-
-### 📞 İletişim Sayfası
-
-- **Veteriner Kartı:** İsim, telefon numarası, Google Maps açacak buton
-- **Kuaför Kartı:** İsim, telefon numarası, Google Maps açacak buton
-- Hızlı arama ve harita navigasyonu
+- [Proje Hakkında](#proje-hakkında)
+- [Özellikler](#özellikler)
+- [Tasarım Sistemi](#tasarım-sistemi)
+- [Teknolojiler](#teknolojiler)
+- [Hızlı Başlangıç](#hızlı-başlangıç)
+- [VS Code ile Çalıştırma](#vs-code-ile-çalıştırma)
+- [Proje Yapısı](#proje-yapısı)
+- [Veriyi Güncelleme](#veriyi-güncelleme)
+- [Tarih Yardımcıları](#tarih-yardımcıları)
+- [PWA](#pwa)
+- [Dağıtım](#dağıtım)
+- [Yol Haritası](#yol-haritası)
+- [Lisans](#lisans)
 
 ---
 
-## 🎨 Tasarım Dili
+## Proje Hakkında
 
-### Tema Paleti
+**Eros App**, Toy Poodle cinsi bir köpek olan Eros için geliştirilmiş kişisel bakım takip uygulamasıdır. Amaç, "son kuaför ne zamandı?", "sıradaki parazit koruması ne zaman?" gibi soruların cevabına telefondan tek dokunuşla ulaşmaktır.
 
-- **Primer Renk:** #fbd38d (Pastel Turuncu/Sarı)
-- **Sekonder Renk:** #fed7e2 (Pastel Pembe)
-- **Arka Plan:** #fffaf0 (Açık Krem)
-- **Metin Rengi:** #4a5568 (Yumuşak Gri/Siyah)
+Uygulama **veritabanı veya backend kullanmaz**; tüm bilgiler `src/data/` altındaki düz JavaScript dosyalarında tutulur ve tarihe bağlı her şey (yaş, kalan gün, gecikme durumu) çalışma anında hesaplanır.
 
-### Responsive Tasarım
-
-- 📱 **Mobil-First Approach:** Ana fokus mobil ekranlar
-- 💻 **Tablet & Desktop:** Şık görünüm ve uyumlu layout
-- 🎯 **Hamburger Menu:** Sadece mobil ekranlarda görünür
-- 🔗 **Active Link Styling:** Mevcut sayfanın navbar linki highlight edilir
-
-### UI Stilizasyonu
-
-- Yuvarlatılmış köşeler (`rounded-2xl`, `rounded-[30px]`)
-- Yumuşak gölgeler (`shadow-soft`)
-- Smooth transitions ve hover efektleri
+| Alan | Değer |
+| --- | --- |
+| Ad | Eros |
+| Doğum Tarihi | 10 Ocak 2025 |
+| Irk | Toy Poodle |
+| Tüy Rengi | Apricot |
+| Ağırlık | 3.79 kg |
 
 ---
 
-## 🛠️ Teknolojiler
+## Özellikler
 
-| Teknoloji            | Versiyon | Kullanım                    |
-| -------------------- | -------- | --------------------------- |
-| **React**            | 18+      | Frontend framework          |
-| **Vite**             | 8.0.0    | Build tool & Dev server     |
-| **Tailwind CSS**     | 3.x      | Styling & Responsive design |
-| **React Router DOM** | Latest   | Client-side routing         |
-| **Lucide React**     | Latest   | Icon library                |
+### Hakkımda
+
+- Fotoğrafın bulanıklaştırılmış halinden oluşan atmosferik profil kartı
+- **Yaş otomatik hesaplanır** (`1 yaş 7 ay`) — veriye elle yaş yazmaya gerek yok
+- Künye ızgarası: yaş, ırk, ağırlık, tüy rengi
+- "Bir Bakışta" özeti: sıradaki aşı ve son kuaför ziyareti, ilgili sayfalara kısayol
+- Doğum gününe kalan gün sayacı
+
+### Aşı Takvimi
+
+- Yüzdelik **tamamlanma çubuğu** ve tamamlanan / planlanan / geciken sayıları
+- **Sıradaki kayıt** vurgu kartı ve geri sayım (`6 gün sonra`)
+- `Tümü · Yaklaşan · Tamamlanan` filtre sekmeleri
+- **Aya göre gruplanmış** dikey zaman çizelgesi
+- Aşı ve parazit kayıtları farklı ikonlarla ayrışır
+- Dinamik durum rozetleri:
+
+  | Durum | Koşul |
+  | --- | --- |
+  | 🟢 Tamamlandı | `isCompleted: true` |
+  | 🔴 Gecikti | Tarih geçmiş, yapılmamış |
+  | 🟠 N gün kaldı | 14 gün içinde |
+  | ⚪ Planlandı | Daha uzak bir tarih |
+
+### Kuaför Takibi
+
+- Önerilen bakım döngüsüne göre **dairesel ilerleme halkası** (`27 / 60 gün`)
+- Duruma göre renk ve mesaj değişir: yeşil (zamanı var) → turuncu (yaklaşıyor) → pembe (randevu zamanı)
+- Son ziyaret ve otomatik hesaplanan **önerilen sonraki tarih**
+- Salon bilgisi, hizmet listesi ve ara bakım ipuçları
+
+### İletişim
+
+- Veteriner ve kuaför kartları
+- Numaraya dokununca **telefon uygulaması açılır** (`tel:`)
+- **Panoya kopyala** butonu (görsel geri bildirimli)
+- Google Maps'te aç
+- Acil durum hatırlatması
+
+### Genel
+
+- 🌙 **Açık / koyu tema** — tercih `localStorage`'da saklanır, ilk açılışta sistem ayarına uyar
+- 📱 **Mobilde alt sekme çubuğu**, masaüstünde üst menü
+- ♿ Klavye odak halkaları, `aria` etiketleri, `prefers-reduced-motion` desteği
+- 🐾 404 sayfası
 
 ---
 
-## 📁 Dosya Yapısı
+## Tasarım Sistemi
+
+Palet, Eros'un kayısı (apricot) rengi tüylerinden türetilmiştir.
+
+| Rol | Renk | Kullanım |
+| --- | --- | --- |
+| `brand` | `#F19B51` | Ana vurgu, butonlar, aktif durumlar |
+| `blush` | `#FB7A95` | Kuaför, gecikmiş uyarılar |
+| `mint` | `#4BBE8D` | Tamamlanmış kayıtlar, olumlu durum |
+| `sky` | `#4FA4F0` | Veteriner, bilgi |
+| `ink` | `#3E3932` | Metin ve nötr yüzeyler |
+| `night` | `#14110F` | Koyu tema zemini (mavi değil, sıcak kömür) |
+
+**Tipografi:** Başlıklar `Quicksand` (yumuşak, yuvarlak), gövde metni `Inter`.
+
+**Yüzeyler:** `rounded-4xl` köşeler, cam efekti (`backdrop-blur`) ve yumuşak `shadow-soft` / `shadow-lift` gölgeler.
+
+**Duyarlılık:** Mobil öncelikli. Kırılım noktası `md` (768px) — altında alt sekme çubuğu, üstünde üst menü. Izgaralar `2 → 4` sütuna açılır.
+
+---
+
+## Teknolojiler
+
+| Teknoloji | Sürüm | Kullanım |
+| --- | --- | --- |
+| React | 19 | Arayüz |
+| Vite | 8 | Derleme ve geliştirme sunucusu |
+| Tailwind CSS | 3.4 | Stil ve duyarlı tasarım |
+| React Router DOM | 7 | Yönlendirme |
+| Lucide React | 0.5x | İkonlar |
+| ESLint | 9 | Kod kalitesi |
+
+---
+
+## Hızlı Başlangıç
+
+**Gereksinim:** [Node.js](https://nodejs.org) 20 veya üzeri (`node -v` ile kontrol edin).
+
+```bash
+git clone https://github.com/BartuOzasci/eros_App.git
+cd eros_App
+npm install
+npm run dev
+```
+
+Tarayıcıda <http://localhost:5173> adresini açın.
+
+### Komutlar
+
+| Komut | Açıklama |
+| --- | --- |
+| `npm run dev` | Geliştirme sunucusu (anlık yenileme ile) |
+| `npm run build` | `dist/` klasörüne production derlemesi |
+| `npm run preview` | Derlenmiş sürümü yerelde önizle |
+| `npm run lint` | ESLint kontrolü |
+
+---
+
+## VS Code ile Çalıştırma
+
+### 1. Projeyi açın
+
+```bash
+git clone https://github.com/BartuOzasci/eros_App.git
+cd eros_App
+code .
+```
+
+> `code` komutu tanınmıyorsa: VS Code'u açın → `Ctrl+Shift+P` → **Shell Command: Install 'code' command in PATH**. Alternatif olarak **File → Open Folder** ile klasörü seçebilirsiniz.
+
+### 2. Önerilen eklentileri kurun
+
+Proje açıldığında VS Code sağ altta *"Bu çalışma alanı eklenti öneriyor"* bildirimi gösterir → **Install** deyin.
+
+Elle kurmak isterseniz `Ctrl+Shift+X` ile Eklentiler sekmesini açıp arayın:
+
+| Eklenti | Neden gerekli |
+| --- | --- |
+| **Tailwind CSS IntelliSense** | Sınıf adı tamamlama ve renk önizleme |
+| **ESLint** | Hataları yazarken görme |
+| **Prettier** | Kod biçimlendirme (opsiyonel) |
+| **Error Lens** | Hataları satır sonunda gösterme (opsiyonel) |
+
+`.vscode/settings.json` dosyası hazırdır; `@tailwind` uyarılarını kapatır ve kaydederken ESLint düzeltmelerini uygular.
+
+### 3. Terminali açın
+
+`Ctrl+Ö` (veya **Terminal → New Terminal**) ile VS Code içinde terminal açın.
+
+> **Windows / PowerShell notu:** `npm` betikleri "bu sistemde betik çalıştırma devre dışı" hatası verirse terminali **yönetici** olarak açıp şunu çalıştırın:
+> ```powershell
+> Set-ExecutionPolicy -Scope CurrentUser RemoteSigned
+> ```
+
+### 4. Bağımlılıkları kurun ve başlatın
+
+```bash
+npm install
+```
+
+```bash
+npm run dev
+```
+
+Terminalde çıkan `http://localhost:5173/` bağlantısına `Ctrl` tuşuna basılı tutarak tıklayın — tarayıcıda açılır.
+
+### 5. Geliştirmeye başlayın
+
+Herhangi bir `.jsx` dosyasını kaydettiğinizde sayfa otomatik yenilenir. Sunucuyu durdurmak için terminalde `Ctrl+C`.
+
+### 6. Hata ayıklama (opsiyonel)
+
+`npm run dev` çalışırken `F5` tuşuna basın. `.vscode/launch.json` sayesinde Chrome açılır ve `.jsx` dosyalarınıza doğrudan kesme noktası (breakpoint) koyabilirsiniz.
+
+### Sık karşılaşılan sorunlar
+
+| Sorun | Çözüm |
+| --- | --- |
+| `'npm' is not recognized` | Node.js kurulu değil ya da PATH'te yok. Kurun ve VS Code'u yeniden başlatın. |
+| Port 5173 dolu | `npm run dev -- --port 3000` |
+| Stiller görünmüyor | Sunucuyu durdurup `npm run dev` ile yeniden başlatın |
+| Tuhaf bağımlılık hataları | `node_modules` ve `package-lock.json` silinip `npm install` tekrar çalıştırılır |
+
+---
+
+## Proje Yapısı
 
 ```
-ErosAPP/
+eros_App/
+├── .vscode/                    # Paylaşılan editör ayarları
 ├── public/
-│   ├── manifest.json          # PWA manifest dosyası
-│   ├── app_icon.png           # PWA uygulama ikonu
-│   └── assets/
-│       └── img/
-│           └── eros-profile.jpg    # Profil fotoğrafı
+│   ├── app-icon.svg            # PWA ikonu (vektörel, maskelenebilir)
+│   ├── app_icon.png            # PNG yedek ikon
+│   ├── favicon.svg             # Pati sekme simgesi
+│   ├── manifest.json           # PWA manifesti
+│   └── assets/img/
+│       └── eros_about.jpg      # Profil fotoğrafı
 ├── src/
-│   ├── assets/
-│   │   └── img/              # Uygulama içi görseller
 │   ├── components/
-│   │   └── common/
-│   │       └── Navbar.jsx    # Navigasyon çubuğu
+│   │   ├── common/
+│   │   │   ├── Navbar.jsx          # Üst menü (masaüstü)
+│   │   │   ├── BottomNav.jsx       # Alt sekme çubuğu (mobil)
+│   │   │   ├── ThemeToggle.jsx     # Açık/koyu tema düğmesi
+│   │   │   ├── PageHeader.jsx      # Ortak sayfa başlığı
+│   │   │   ├── StatCard.jsx        # İstatistik kartı
+│   │   │   ├── ProgressRing.jsx    # SVG dairesel ilerleme
+│   │   │   ├── ScrollToTop.jsx     # Rota değişiminde başa sarma
+│   │   │   └── Footer.jsx
+│   │   └── layout/
+│   │       └── AppLayout.jsx       # Ortak kabuk
+│   ├── data/                       # Tüm içerik burada
+│   │   ├── aboutData.js
+│   │   ├── vaccinesData.js
+│   │   ├── groomerData.js
+│   │   ├── contactData.js
+│   │   └── navigation.js
+│   ├── hooks/
+│   │   └── useTheme.js
 │   ├── pages/
-│   │   ├── About.jsx         # Hakkımda sayfası
-│   │   ├── Vaccines.jsx      # Aşılarım sayfası (Timeline)
-│   │   ├── Groomer.jsx       # Kuaför sayfası
-│   │   └── Contact.jsx       # İletişim sayfası
-│   ├── data/
-│   │   ├── aboutData.js      # Profil verileri
-│   │   ├── vaccinesData.js   # Aşı verileri
-│   │   ├── groomerData.js    # Kuaför verileri
-│   │   └── contactData.js    # İletişim verileri
+│   │   ├── About.jsx
+│   │   ├── Vaccines.jsx
+│   │   ├── Groomer.jsx
+│   │   ├── Contact.jsx
+│   │   └── NotFound.jsx
 │   ├── utils/
-│   │   └── dateHelpers.js    # Tarih hesaplama fonksiyonları
-│   ├── App.jsx               # Root component
-│   ├── main.jsx              # Entry point
-│   └── index.css             # Global stiller
-├── index.html                # HTML template
-├── tailwind.config.js        # Tailwind konfigürasyonu
-├── postcss.config.js         # PostCSS konfigürasyonu
-├── package.json              # Bağımlılıklar
-├── vite.config.js            # Vite konfigürasyonu
-└── README.md                 # Bu dosya
+│   │   └── dateHelpers.js
+│   ├── App.jsx
+│   ├── main.jsx
+│   └── index.css               # Tailwind katmanları + tasarım token'ları
+├── index.html
+├── tailwind.config.js          # Palet, tipografi, animasyonlar
+└── vite.config.js
 ```
+
+### Rotalar
+
+| Rota | Sayfa |
+| --- | --- |
+| `/` | Hakkımda |
+| `/vaccines` | Aşı Takvimi |
+| `/groomer` | Kuaför Takibi |
+| `/contact` | İletişim |
+| `*` | 404 |
 
 ---
 
-## 🚀 Kurulum ve Çalıştırma
+## Veriyi Güncelleme
 
-### Gereksinimler
+Kod değiştirmeye gerek yok — yalnızca `src/data/` altındaki dosyaları düzenleyin.
 
-- Node.js 16+
-- npm veya yarn
+**Yeni aşı eklemek** (`src/data/vaccinesData.js`):
 
-### Adım Adım Kurulum
-
-1. **Repository'i klonla:**
-
-   ```bash
-   git clone https://github.com/BartuOzasci/eros_App.git
-   cd eros_App
-   ```
-
-2. **Bağımlılıkları yükle:**
-
-   ```bash
-   npm install
-   ```
-
-3. **Geliştirme sunucusunu başlat:**
-
-   ```bash
-   npm run dev
-   ```
-
-   → Application çalışacak: `http://localhost:5173/`
-
-4. **Production build oluştur:**
-
-   ```bash
-   npm run build
-   ```
-
-5. **Build'i preview et (localhost'ta):**
-   ```bash
-   npm run preview
-   ```
-
----
-
-## 📲 PWA Özellikleri
-
-Eros App, Progressive Web App standartlarını destekler:
-
-- ✅ **Manifest Dosyası:** `manifest.json` ile telefon ana ekranına ekleme desteği
-- ✅ **Apple Touch Icon:** iOS cihazlarda özel ikon gösterilir
-- ✅ **Responsive Design:** Tüm cihazlarda mükemmel görünüm
-- ✅ **Fast Load:** Vite'nin hızlı build sistemi
-- ✅ **Modern ES6+ Code:** Tüm tarayıcılarda uyumlu
-
-### PWA olarak Kurulum
-
-**Android/Chrome:**
-
-1. Uygulama adresine git
-2. Menüden "Ana ekrana ekle" seçeneğini tıkla
-3. Eros App telefon ana ekranında görünecek
-
-**iOS/Safari:**
-
-1. Uygulama adresine git
-2. Safari'de "Paylaş" butonu → "Ana Ekrana Ekle"
-3. Eros App telefon ana ekranında görünecek
-
----
-
-## 🔧 utils/dateHelpers.js - Tarih Fonksiyonları
-
-### `calculateDaysPassed(pastDateString)`
-
-İki tarih arasındaki gün farkını hesaplar.
-
-```javascript
-const days = calculateDaysPassed("2025-01-15");
-// Sonuç: 60 (örnek)
-```
-
-### `getCurrentYear()`
-
-Mevcut takvim yılını döndürür.
-
-```javascript
-const year = getCurrentYear(); // 2026
-```
-
-### `getVaccineStatusColor(dateString, isCompleted)`
-
-Aşı durumuna göre renk CSS sınıfı döndürür.
-
-```javascript
-const color = getVaccineStatusColor("2025-03-01", true);
-// Sonuç: "bg-green-100 text-green-700 border-green-400"
-```
-
----
-
-## 📊 Data Yapıları
-
-### aboutData.js
-
-```javascript
+```js
 {
-  name: "Eros",
-  dob: "10.01.2025",
-  breed: "Toy Poodle",
-  weight: "3.79 Kg",
-  image: "/assets/img/eros-profile.jpg"
+  id: 11,
+  name: "Kuduz Aşısı",
+  date: "2027-06-10",     // YYYY-AA-GG
+  isCompleted: false,
+  type: "vaccine",         // "vaccine" | "parasite"
 }
 ```
 
-### vaccinesData.js
+**Kuaför ziyaretini güncellemek** (`src/data/groomerData.js`):
 
-```javascript
-[
-  { id: 1, name: "Karma Aşı 1", date: "2025-03-01", isCompleted: true },
-  { id: 2, name: "Kuduz Aşısı", date: "2025-04-15", isCompleted: false },
-  { id: 3, name: "Lyme Aşısı", date: "2026-10-01", isCompleted: false },
-];
+```js
+export const groomerData = {
+  lastVisit: "2026-10-06",  // yeni tarihi yazın
+  intervalDays: 60,         // önerilen bakım aralığı
+  // ...
+};
 ```
 
-### groomerData.js
-
-```javascript
-{
-  lastVisit: "2025-01-15"; // YYYY-MM-DD formatı
-}
-```
-
-### contactData.js
-
-```javascript
-{
-  vet: { name: "...", phone: "+90 ...", mapUrl: "https://..." },
-  groomer: { name: "...", phone: "+90 ...", mapUrl: "https://..." }
-}
-```
+Sayaç, ilerleme halkası ve "önerilen tarih" otomatik güncellenir.
 
 ---
 
-## 🌐 Deployment (Vercel)
+## Tarih Yardımcıları
 
-### Vercel'e Deploy Etme
+`src/utils/dateHelpers.js` — tüm tarih mantığı burada toplanır. Hesaplamalar yerel gece yarısına sabitlenir, böylece saat farkından kaynaklı kaymalar oluşmaz.
 
-1. [Vercel](https://vercel.com) hesabına giriş yap
-2. GitHub repository'nizi seçin
-3. "Deploy" butonuna tıklayın
-4. ~1 dakika içinde canlı olacak
-
-**Deployment URL:** `https://eros-app.vercel.app`
-
-### Ortam Değişkenleri
-
-`.env.local` dosyası varsa Vercel'de ayarlanmalıdır (şu anda gerekli değil).
-
----
-
-## 🎯 Sayfa Rotalama (React Router)
-
-| Rota        | Sayfa    | Açıklama                    |
-| ----------- | -------- | --------------------------- |
-| `/`         | About    | Profil & Kimlik Kartı       |
-| `/vaccines` | Vaccines | Aşı Takvimi & Timeline      |
-| `/groomer`  | Groomer  | Son Kuaför Ziyareti         |
-| `/contact`  | Contact  | Veteriner & Kuaför İletişim |
+| Fonksiyon | Döndürdüğü değer |
+| --- | --- |
+| `calculateDaysPassed(date)` | Geçen gün sayısı (gelecek tarihte negatif) |
+| `daysUntil(date)` | Kalan gün sayısı |
+| `addDays(date, n)` | `n` gün eklenmiş `Date` |
+| `calculateAge(dob)` | `{ years, months, totalMonths, label }` |
+| `daysUntilBirthday(dob)` | Doğum gününe kalan gün |
+| `formatDateTR(date)` | `9 Eylül 2026` |
+| `formatShortTR(date)` | `9 Eyl` |
+| `formatWeekdayTR(date)` | `Çarşamba` |
+| `formatRelativeDays(date)` | `Bugün` / `3 gün sonra` / `12 gün önce` |
+| `getVaccineStatus(date, done)` | `{ key, label, dot, chip }` durum nesnesi |
+| `getNextRecord(list)` | Tamamlanmamış en yakın kayıt |
+| `getOverdueRecords(list)` | Tarihi geçmiş kayıtlar |
 
 ---
 
-## 🔄 V1.0 Sürüm Notları (Release)
+## PWA
 
-### Tamamlanan Özellikler
+Uygulama telefon ana ekranına eklenebilir.
 
-✅ Temel proje yapısı ve mimarisi
-✅ Responsive navbar ve hamburger menu
-✅ Dört ana sayfa (About, Vaccines, Groomer, Contact)
-✅ Otomatik chronological sıralama (Vaccines)
-✅ Dinamik renk algoritması (Aşı durumu)
-✅ Tarih hesaplama fonksiyonları
-✅ PWA manifest ve ikonları
-✅ Tailwind CSS tema
-✅ Clean Code & modüler yapı
+- **Android / Chrome:** Menü → *Ana ekrana ekle*
+- **iOS / Safari:** Paylaş → *Ana Ekrana Ekle*
 
-### Gelecek Sürümler (Roadmap)
+Manifest; tam ekran (`standalone`) mod, maskelenebilir vektör ikon ve **hızlı eylem kısayolları** (Aşılar, Kuaför, İletişim) içerir.
 
-- 📋 Service Worker & Offline Support
-- 🔔 Aşı hatırlatma bildirimleri
-- 📸 Fotoğraf yükleme özellikleri
-- 📝 Notlar ve loglar
-- 🌙 Dark mode desteği
-- 🌍 Multi-language support
+> Çevrimdışı kullanım için Service Worker henüz eklenmemiştir — yol haritasında yer alıyor.
 
 ---
 
-## 📝 Lisans
+## Dağıtım
 
-Eros App, MIT Lisansı altında açık kaynak olarak yayımlanmaktadır.
+Uygulama tamamen statiktir; `npm run build` sonrası `dist/` klasörü herhangi bir statik sunucuya yüklenebilir.
 
----
+**Vercel / Netlify:** Depoyu bağlayın, ayarlar otomatik algılanır.
 
-## 👨‍💻 Gelistirici
+| Ayar | Değer |
+| --- | --- |
+| Build command | `npm run build` |
+| Output directory | `dist` |
 
-Bartu Özaşçı
-
----
-
-## 💬 Destek & Geri Bildirim
-
-Sorun, öneriler veya sorular için GitHub Issues'i kullanabilirsiniz.
+> **Önemli:** İstemci tarafı yönlendirme kullanıldığı için, sunucunun tüm istekleri `index.html`'e yönlendirmesi gerekir. Aksi halde `/vaccines` adresini doğrudan açtığınızda 404 alırsınız. Vercel ve Netlify bunu Vite projelerinde otomatik yapar; kendi sunucunuzda `try_files $uri /index.html;` benzeri bir kural ekleyin.
 
 ---
 
-## 🙏 Teşekkürler
+## Yol Haritası
 
-- [Vite](https://vitejs.dev)
-- [React](https://react.dev)
-- [Tailwind CSS](https://tailwindcss.com)
-- [React Router](https://reactrouter.com)
-- [Lucide React](https://lucide.dev)
+- [ ] Service Worker ile çevrimdışı destek
+- [ ] Aşı hatırlatma bildirimleri
+- [ ] Kuaför ziyaret geçmişi (tek tarih yerine liste)
+- [ ] Fotoğraf galerisi
+- [ ] Kilo takibi grafiği
+- [ ] Verileri tarayıcıda düzenleme (şu an kod içinde)
+
+---
+
+## Lisans
+
+MIT
+
+## Geliştirici
+
+**Bartu Özaşçı** — [GitHub](https://github.com/BartuOzasci)
 
 ---
 
 <div align="center">
-  
-  **Eros App v1.0** 🐾 Made with ❤️
-
+  <sub>🐾 Eros için yapıldı</sub>
 </div>

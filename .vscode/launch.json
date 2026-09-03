@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      // Önce `npm run dev` çalıştırın, sonra F5 ile bu yapılandırmayı başlatın.
+      "type": "chrome",
+      "request": "launch",
+      "name": "Chrome ile hata ayıkla (Vite)",
+      "url": "http://localhost:5173",
+      "webRoot": "${workspaceFolder}/src",
+      "sourceMapPathOverrides": {
+        "/src/*": "${workspaceFolder}/src/*"
+      }
+    }
+  ]
+}

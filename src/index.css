@@ -2,9 +2,153 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  background-color: #fffaf0;
-  margin: 0;
-  padding: 0;
-  font-family: system-ui, -apple-system, sans-serif;
+@layer base {
+  :root {
+    --page-bg: #fffbf5;
+    --page-bg-accent: rgba(246, 184, 124, 0.16);
+    --page-bg-accent-2: rgba(255, 204, 214, 0.2);
+    color-scheme: light;
+  }
+
+  .dark {
+    --page-bg: #14110f;
+    --page-bg-accent: rgba(233, 130, 47, 0.14);
+    --page-bg-accent-2: rgba(240, 83, 119, 0.1);
+    color-scheme: dark;
+  }
+
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: var(--page-bg);
+    /* Sayfanın arkasında yumuşak, tema duyarlı ışık lekeleri */
+    background-image:
+      radial-gradient(
+        60rem 40rem at 12% -10%,
+        var(--page-bg-accent) 0%,
+        transparent 60%
+      ),
+      radial-gradient(
+        45rem 35rem at 100% 8%,
+        var(--page-bg-accent-2) 0%,
+        transparent 60%
+      );
+    background-attachment: fixed;
+    color: theme("colors.ink.700");
+    font-family: theme("fontFamily.sans");
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  .dark body {
+    color: theme("colors.ink.100");
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: theme("fontFamily.display");
+    letter-spacing: -0.015em;
+  }
+
+  /* Klavye ile gezinenler için net, marka renginde odak halkası */
+  :focus-visible {
+    outline: 2px solid theme("colors.brand.500");
+    outline-offset: 3px;
+    border-radius: 0.75rem;
+  }
+
+  ::selection {
+    background: theme("colors.brand.200");
+    color: theme("colors.ink.900");
+  }
+}
+
+@layer components {
+  /* Tüm sayfaların ortak, mobil öncelikli kapsayıcısı */
+  .app-container {
+    @apply mx-auto w-full max-w-xl px-4 sm:px-6 lg:max-w-3xl;
+  }
+
+  .surface {
+    @apply rounded-4xl border border-white/70 bg-white/85 shadow-soft backdrop-blur-sm
+           dark:border-white/5 dark:bg-night-800/80;
+  }
+
+  .surface-flat {
+    @apply rounded-3xl border border-ink-100 bg-white/70
+           dark:border-white/5 dark:bg-night-700/50;
+  }
+
+  .chip {
+    @apply inline-flex items-center gap-1.5 rounded-full px-3 py-1
+           text-xs font-semibold tracking-wide;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-2xl px-4 py-3
+           text-sm font-semibold transition-all duration-200
+           active:scale-[0.97] disabled:pointer-events-none disabled:opacity-50;
+  }
+
+  .btn-primary {
+    @apply btn bg-brand-gradient text-white shadow-glow hover:brightness-105;
+  }
+
+  .btn-ghost {
+    @apply btn border border-ink-200 bg-white/70 text-ink-600 hover:bg-white
+           dark:border-white/10 dark:bg-white/5 dark:text-ink-200 dark:hover:bg-white/10;
+  }
+
+  .section-title {
+    @apply text-xs font-bold uppercase tracking-[0.18em] text-ink-400 dark:text-ink-400;
+  }
+}
+
+@layer utilities {
+  /* iOS çentik/ana ekran çubuğu güvenli alanları */
+  .pb-safe {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .mb-safe {
+    margin-bottom: env(safe-area-inset-bottom);
+  }
+
+  .text-gradient {
+    @apply bg-brand-gradient bg-clip-text text-transparent;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+
+/* Hareketi azaltma tercihi olan kullanıcılar için tüm animasyonları durdur */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
 }

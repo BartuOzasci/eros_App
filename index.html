@@ -1,13 +1,59 @@
 <!doctype html>
-<html lang="en">
+<html lang="tr" class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="manifest" href="/manifest.json" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <title>Eros · Toy Poodle Bakım Takibi</title>
+    <meta
+      name="description"
+      content="Eros'un profili, aşı takvimi, kuaför ziyaretleri ve veteriner iletişim bilgilerini tek yerde toplayan mobil öncelikli PWA."
+    />
+    <meta name="author" content="Bartu Özaşçı" />
+
+    <!-- Açık/koyu temaya göre tarayıcı arayüz rengi -->
+    <meta name="theme-color" content="#FFFBF5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#14110F" media="(prefers-color-scheme: dark)" />
+    <meta name="color-scheme" content="light dark" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/app_icon.png" />
-    <meta name="theme-color" content="#fffaf0" />
-    <title>Eros App - Toy Poodle</title>
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Eros" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <!-- Sosyal medya önizlemesi -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Eros · Toy Poodle Bakım Takibi" />
+    <meta
+      property="og:description"
+      content="Aşı takvimi, kuaför sayacı ve hızlı iletişim — hepsi tek bir sevimli uygulamada."
+    />
+    <meta property="og:image" content="/app_icon.png" />
+    <meta name="twitter:card" content="summary" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Quicksand:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <script>
+      /* Sayfa boyanmadan önce temayı uygula — koyu temada beyaz ekran parlamasını önler */
+      (function () {
+        try {
+          var saved = localStorage.getItem('eros-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (saved === 'dark' || (!saved && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          }
+        } catch (e) {
+          /* localStorage kapalıysa açık temayla devam et */
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

@@ -23,7 +23,12 @@ export default defineConfig([
       },
     },
     rules: {
-      'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
+      // eslint-plugin-react kullanılmadığı için JSX içindeki kullanımlar görülmüyor.
+      // Bileşen olarak geçilen büyük harfli değişken ve parametreler bu yüzden muaf tutulur.
+      'no-unused-vars': [
+        'error',
+        { varsIgnorePattern: '^[A-Z_]', argsIgnorePattern: '^[A-Z_]' },
+      ],
     },
   },
 ])

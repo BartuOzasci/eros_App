@@ -1,20 +1,57 @@
 {
-  "short_name": "Eros App",
-  "name": "Eros - The Toy Poodle",
+  "name": "Eros · Toy Poodle Bakım Takibi",
+  "short_name": "Eros",
+  "description": "Eros'un profili, aşı takvimi, kuaför ziyaretleri ve veteriner iletişim bilgileri tek uygulamada.",
+  "lang": "tr",
+  "dir": "ltr",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#F19B51",
+  "background_color": "#FFFBF5",
+  "categories": ["lifestyle", "health"],
   "icons": [
     {
-      "src": "/app_icon.png",
-      "type": "image/png",
-      "sizes": "192x192"
+      "src": "/app-icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "any"
     },
     {
       "src": "/app_icon.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/app_icon.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/app-icon.svg",
+      "type": "image/svg+xml",
+      "sizes": "any",
+      "purpose": "maskable"
     }
   ],
-  "start_url": ".",
-  "display": "standalone",
-  "theme_color": "#fffaf0",
-  "background_color": "#fffaf0"
+  "shortcuts": [
+    {
+      "name": "Aşı Takvimi",
+      "short_name": "Aşılar",
+      "url": "/vaccines"
+    },
+    {
+      "name": "Kuaför Takibi",
+      "short_name": "Kuaför",
+      "url": "/groomer"
+    },
+    {
+      "name": "İletişim",
+      "short_name": "İletişim",
+      "url": "/contact"
+    }
+  ]
 }
