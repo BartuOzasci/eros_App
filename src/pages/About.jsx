@@ -18,9 +18,9 @@ import {
   calculateDaysPassed,
   daysUntilBirthday,
   formatDateTR,
-  formatRelativeDays,
-  getNextRecord,
+  formatDueLabel,
 } from "../utils/dateHelpers";
+import { buildVaccineOverview, resolveSeries } from "../utils/schedule";
 
 const FALLBACK_IMAGE =
   "https://placehold.co/400x400/F19B51/ffffff.png?text=Eros";
@@ -28,8 +28,15 @@ const FALLBACK_IMAGE =
 const About = () => {
   const age = calculateAge(aboutData.dob);
   const birthdayIn = daysUntilBirthday(aboutData.dob);
-  const nextVaccine = getNextRecord(vaccinesData);
-  const groomerDays = calculateDaysPassed(groomerData.lastVisit);
+  /* En acil doz: gecikmiş olan varsa o, yoksa tarihi en yakın olan */
+  const nextVaccine = buildVaccineOverview(vaccinesData).nextUp;
+  const isVaccineLate = nextVaccine !== null && (nextVaccine.daysLeft ?? -1) < 0;
+  const lastGroomerVisit = resolveSeries({
+    id: "kuafor",
+    every: groomerData.every,
+    records: groomerData.visits,
+  }).lastDone?.date;
+  const groomerDays = lastGroomerVisit ? calculateDaysPassed(lastGroomerVisit) : null;
 
   return (
     <div className="app-container space-y-6">
@@ -145,9 +152,15 @@ const About = () => {
               </p>
               {nextVaccine && (
                 <p className="text-xs text-ink-400 dark:text-ink-400">
-                  {formatDateTR(nextVaccine.date)} ·{" "}
-                  <span className="font-semibold text-brand-600 dark:text-brand-300">
-                    {formatRelativeDays(nextVaccine.date)}
+                  {nextVaccine.date ? `${formatDateTR(nextVaccine.date)} · ` : ""}
+                  <span
+                    className={`font-semibold ${
+                      isVaccineLate
+                        ? "text-blush-600 dark:text-blush-300"
+                        : "text-brand-600 dark:text-brand-300"
+                    }`}
+                  >
+                    {formatDueLabel(nextVaccine.daysLeft)}
                   </span>
                 </p>
               )}
@@ -167,10 +180,10 @@ const About = () => {
                 Son kuaför
               </p>
               <p className="font-display text-base font-bold text-ink-800 dark:text-ink-50">
-                {groomerDays} gün önce
+                {groomerDays === null ? "Kayıt yok" : `${groomerDays} gün önce`}
               </p>
               <p className="text-xs text-ink-400 dark:text-ink-400">
-                {formatDateTR(groomerData.lastVisit)}
+                {formatDateTR(lastGroomerVisit)}
               </p>
             </div>
             <ChevronRight className="h-5 w-5 shrink-0 text-ink-300 transition-transform duration-300 group-hover:translate-x-1" />
