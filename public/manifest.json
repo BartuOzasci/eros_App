@@ -13,27 +13,27 @@
   "categories": ["lifestyle", "health"],
   "icons": [
     {
-      "src": "/app-icon.svg",
-      "type": "image/svg+xml",
-      "sizes": "any",
-      "purpose": "any"
-    },
-    {
-      "src": "/app_icon.png",
+      "src": "/icons/icon-192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any"
     },
     {
-      "src": "/app_icon.png",
+      "src": "/icons/icon-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any"
     },
     {
-      "src": "/app-icon.svg",
-      "type": "image/svg+xml",
-      "sizes": "any",
+      "src": "/icons/icon-maskable-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/icons/icon-maskable-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
       "purpose": "maskable"
     }
   ],

@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="public/app-icon.svg" alt="Eros App" width="120" height="120" />
+  <img src="public/icons/icon-512.png" alt="Eros App" width="120" height="120" />
 
   <h1>Eros App</h1>
 
@@ -62,25 +62,29 @@ Uygulama **veritabanı veya backend kullanmaz**; tüm bilgiler `src/data/` altı
 
 ### Aşı Takvimi
 
-- Yüzdelik **tamamlanma çubuğu** ve tamamlanan / planlanan / geciken sayıları
-- **Sıradaki kayıt** vurgu kartı ve geri sayım (`6 gün sonra`)
-- `Tümü · Yaklaşan · Tamamlanan` filtre sekmeleri
-- **Aya göre gruplanmış** dikey zaman çizelgesi
-- Aşı ve parazit kayıtları farklı ikonlarla ayrışır
+- **Sıradaki doz otomatik hesaplanır:** `true` olan en son kaydın tarihine tekrar aralığı eklenir — iç-dış parazit **60 günde bir**, Bronşin, Karma, Kuduz ve Lyme **yılda bir**. Gelecek dozu dosyaya yazmaya gerek yoktur.
+- Her bekleyen doz `45 gün kaldı` / `Bugün` / `5 gün gecikti` şeklinde geri sayar; altında son dozdan bu yana döngünün ne kadarının dolduğunu gösteren çubuk vardır
+- **Koruma durumu:** kaç aşı türünün güncel olduğu (`5 / 5 tür güncel`)
+- En acil doz için vurgu kartı (gecikmişse kırmızıya döner)
+- **Hızlı kayıt:** bekleyen her dozdaki `Yapıldı` butonu, GitHub'a eklenecek satırı bugünün tarihiyle hazırlayıp kopyalar ve veri dosyasını GitHub düzenleyicisinde açar
+- Önce sıradaki dozlar (en yakın başta), sonra **son 2 yılın geçmişi** (en yeni başta); 2 yıldan eski kayıtlar gösterilmez
+- `Tümü · Yaklaşan · Tamamlanan` filtre sekmeleri, aya göre gruplanmış zaman çizelgesi
+- Veri dosyasına okunamayan bir tarih yazılırsa sayfada uyarı çıkar
 - Dinamik durum rozetleri:
 
   | Durum | Koşul |
   | --- | --- |
   | 🟢 Tamamlandı | `isCompleted: true` |
-  | 🔴 Gecikti | Tarih geçmiş, yapılmamış |
+  | 🔴 N gün gecikti | Tarih geçmiş, yapılmamış |
   | 🟠 N gün kaldı | 14 gün içinde |
-  | ⚪ Planlandı | Daha uzak bir tarih |
+  | ⚪ N gün kaldı | Daha uzak bir tarih |
 
 ### Kuaför Takibi
 
 - Önerilen bakım döngüsüne göre **dairesel ilerleme halkası** (`27 / 60 gün`)
 - Duruma göre renk ve mesaj değişir: yeşil (zamanı var) → turuncu (yaklaşıyor) → pembe (randevu zamanı)
-- Son ziyaret ve otomatik hesaplanan **önerilen sonraki tarih**
+- Son ziyaret ve otomatik hesaplanan **önerilen sonraki tarih** (randevu girildiyse randevu tarihi)
+- **Ziyaret geçmişi:** son 2 yılın ziyaretleri, aralarındaki gün sayısı ve ortalama ziyaret sıklığı
 - Salon bilgisi, hizmet listesi ve ara bakım ipuçları
 
 ### İletişim
@@ -231,12 +235,11 @@ Herhangi bir `.jsx` dosyasını kaydettiğinizde sayfa otomatik yenilenir. Sunuc
 eros_App/
 ├── .vscode/                    # Paylaşılan editör ayarları
 ├── public/
-│   ├── app-icon.svg            # PWA ikonu (vektörel, maskelenebilir)
-│   ├── app_icon.png            # PNG yedek ikon
+│   ├── icons/                  # Kare PWA ikonları (192/512, maskable, apple-touch-icon)
 │   ├── favicon.svg             # Pati sekme simgesi
 │   ├── manifest.json           # PWA manifesti
 │   └── assets/img/
-│       └── eros_about.jpg      # Profil fotoğrafı
+│       └── eros_about.webp     # Profil fotoğrafı
 ├── src/
 │   ├── components/
 │   │   ├── common/
@@ -246,6 +249,7 @@ eros_App/
 │   │   │   ├── PageHeader.jsx      # Ortak sayfa başlığı
 │   │   │   ├── StatCard.jsx        # İstatistik kartı
 │   │   │   ├── ProgressRing.jsx    # SVG dairesel ilerleme
+│   │   │   ├── QuickRecordSheet.jsx # "Yapıldı" hızlı kayıt alt sayfası
 │   │   │   ├── ScrollToTop.jsx     # Rota değişiminde başa sarma
 │   │   │   └── Footer.jsx
 │   │   └── layout/
@@ -255,7 +259,8 @@ eros_App/
 │   │   ├── vaccinesData.js
 │   │   ├── groomerData.js
 │   │   ├── contactData.js
-│   │   └── navigation.js
+│   │   ├── navigation.js
+│   │   └── repo.js                 # Hızlı kaydın açtığı GitHub deposu
 │   ├── hooks/
 │   │   └── useTheme.js
 │   ├── pages/
@@ -265,12 +270,14 @@ eros_App/
 │   │   ├── Contact.jsx
 │   │   └── NotFound.jsx
 │   ├── utils/
-│   │   └── dateHelpers.js
+│   │   ├── dateHelpers.js          # Tarih ayrıştırma, biçimleme, aralık ekleme
+│   │   └── schedule.js             # Sıradaki doz ve 2 yıllık geçmiş hesabı
 │   ├── App.jsx
 │   ├── main.jsx
 │   └── index.css               # Tailwind katmanları + tasarım token'ları
 ├── index.html
 ├── tailwind.config.js          # Palet, tipografi, animasyonlar
+├── vercel.json                 # Tüm rotaları index.html'e yönlendirir (SPA)
 └── vite.config.js
 ```
 
@@ -288,31 +295,50 @@ eros_App/
 
 ## Veriyi Güncelleme
 
-Kod değiştirmeye gerek yok — yalnızca `src/data/` altındaki dosyaları düzenleyin.
+Kod değiştirmeye gerek yok — yalnızca `src/data/` altındaki dosyaları düzenleyin. GitHub'da kaydettiğiniz değişiklik Vercel'de 1-2 dakika içinde yayına girer.
 
-**Yeni aşı eklemek** (`src/data/vaccinesData.js`):
+### Aşı veya parazit yapıldığında
+
+`src/data/vaccinesData.js` içinde her koruma türü bir bloktur. Doz yapıldığında ilgili bloğun `records` listesine **bugünün tarihiyle tek satır** ekleyin:
 
 ```js
 {
-  id: 11,
-  name: "Kuduz Aşısı",
-  date: "2027-06-10",     // YYYY-AA-GG
-  isCompleted: false,
-  type: "vaccine",         // "vaccine" | "parasite"
-}
+  id: "parazit",
+  name: "İç Dış Parazit",
+  type: "parasite",          // "vaccine" | "parasite"
+  every: { days: 60 },       // tekrar aralığı: { days } | { months } | { years }
+  records: [
+    { date: "2026-07-09", isCompleted: true },
+    { date: "2026-10-28", isCompleted: true },  // <- yeni satır
+  ],
+},
 ```
 
-**Kuaför ziyaretini güncellemek** (`src/data/groomerData.js`):
+Sıradaki doz (`2026-10-28` + 60 gün = **27 Aralık 2026**) otomatik hesaplanır ve uygulamada `60 gün kaldı` olarak görünür. Gelecek dozu dosyaya yazmanıza gerek yoktur.
+
+> **Telefondan en kısa yol:** Aşı sayfasında ilgili dozun `Yapıldı` butonuna dokunun. Satır kopyalanır ve dosya GitHub düzenleyicisinde açılır; yapıştırıp **Commit changes** demeniz yeterli.
+
+İsteğe bağlı durumlar:
+
+| Durum | Ne yazılır |
+| --- | --- |
+| Randevu tarihi belli | `{ date: "2026-12-20", isCompleted: false }` — otomatik tarih yerine bu gösterilir; yapılınca `true` yapıp tarihi güncelleyin |
+| Farklı süreli ürün (ör. 3 aylık parazit) | `{ date: "2026-07-09", isCompleted: true, every: { months: 3 } }` — sıradaki doz bu kayda göre hesaplanır |
+| Tarih biçimi | `"2026-10-28"` veya `"28.10.2026"` |
+| 2 yıldan eski kayıtlar | Uygulamada gösterilmez; dosyadan silmek de güvenlidir |
+
+### Kuaföre gidildiğinde
+
+`src/data/groomerData.js` içindeki `visits` listesine bir satır ekleyin:
 
 ```js
-export const groomerData = {
-  lastVisit: "2026-10-06",  // yeni tarihi yazın
-  intervalDays: 60,         // önerilen bakım aralığı
-  // ...
-};
+visits: [
+  { date: "2026-08-07", isCompleted: true },
+  { date: "2026-10-28", isCompleted: true },  // <- yeni ziyaret
+],
 ```
 
-Sayaç, ilerleme halkası ve "önerilen tarih" otomatik güncellenir.
+Son ziyaret, sayaç, ilerleme halkası, önerilen tarih (`every: { days: 60 }`) ve ziyaret geçmişi otomatik güncellenir. Randevu alındıysa satırı `isCompleted: false` ile ekleyin.
 
 ---
 
@@ -322,18 +348,30 @@ Sayaç, ilerleme halkası ve "önerilen tarih" otomatik güncellenir.
 
 | Fonksiyon | Döndürdüğü değer |
 | --- | --- |
+| `parseDate(value)` | `"2026-10-28"` / `"28.10.2026"` → yerel `Date`, okunamazsa `null` |
+| `diffInDays(a, b)` | İki tarih arası gün farkı |
 | `calculateDaysPassed(date)` | Geçen gün sayısı (gelecek tarihte negatif) |
 | `daysUntil(date)` | Kalan gün sayısı |
 | `addDays(date, n)` | `n` gün eklenmiş `Date` |
+| `addInterval(date, { days, months, years })` | Aralık eklenmiş `Date` (31 Ocak + 1 ay → 28 Şubat) |
+| `toISODate(date)` | `2026-10-28` |
 | `calculateAge(dob)` | `{ years, months, totalMonths, label }` |
 | `daysUntilBirthday(dob)` | Doğum gününe kalan gün |
 | `formatDateTR(date)` | `9 Eylül 2026` |
 | `formatShortTR(date)` | `9 Eyl` |
 | `formatWeekdayTR(date)` | `Çarşamba` |
 | `formatRelativeDays(date)` | `Bugün` / `3 gün sonra` / `12 gün önce` |
+| `formatDueLabel(days)` | `Bugün` / `Yarın` / `12 gün kaldı` / `5 gün gecikti` |
+| `formatInterval(every)` | `60 günde bir` / `Yılda bir` / `3 ayda bir` |
 | `getVaccineStatus(date, done)` | `{ key, label, dot, chip }` durum nesnesi |
-| `getNextRecord(list)` | Tamamlanmamış en yakın kayıt |
-| `getOverdueRecords(list)` | Tarihi geçmiş kayıtlar |
+
+`src/utils/schedule.js` — tekrar eden kayıtların mantığı:
+
+| Fonksiyon | Döndürdüğü değer |
+| --- | --- |
+| `resolveSeries(series)` | Bir tür için `lastDone`, `next` (randevu ya da otomatik), `daysLeft`, son 2 yılın `history`'si |
+| `buildVaccineOverview(list)` | Tüm türler için `pending`, `history`, `overdue`, `nextUp` ve okunamayan tarihler |
+| `HISTORY_YEARS` | Listelenecek geçmişin yıl sayısı (`2`) |
 
 ---
 
@@ -344,7 +382,17 @@ Uygulama telefon ana ekranına eklenebilir.
 - **Android / Chrome:** Menü → *Ana ekrana ekle*
 - **iOS / Safari:** Paylaş → *Ana Ekrana Ekle*
 
-Manifest; tam ekran (`standalone`) mod, maskelenebilir vektör ikon ve **hızlı eylem kısayolları** (Aşılar, Kuaför, İletişim) içerir.
+Manifest; tam ekran (`standalone`) mod ve **hızlı eylem kısayolları** (Aşılar, Kuaför, İletişim) içerir.
+
+**İkonlar** (`public/icons/`) kare ve oranları korunmuş PNG'lerdir:
+
+| Dosya | Kullanım |
+| --- | --- |
+| `icon-192.png`, `icon-512.png` | Genel ikon (şeffaf zemin) |
+| `icon-maskable-192.png`, `icon-maskable-512.png` | Android uyarlanabilir ikon; rozet %80 güvenli alanın içinde |
+| `apple-touch-icon.png` | iOS ana ekranı (180px, opak zemin — iOS şeffaflığı siyaha boyar) |
+
+> iOS ana ekran ikonunu önbellekte tutar. İkon güncellendiğinde uygulamayı ana ekrandan silip yeniden ekleyin.
 
 > Çevrimdışı kullanım için Service Worker henüz eklenmemiştir — yol haritasında yer alıyor.
 
@@ -361,7 +409,7 @@ Uygulama tamamen statiktir; `npm run build` sonrası `dist/` klasörü herhangi 
 | Build command | `npm run build` |
 | Output directory | `dist` |
 
-> **Önemli:** İstemci tarafı yönlendirme kullanıldığı için, sunucunun tüm istekleri `index.html`'e yönlendirmesi gerekir. Aksi halde `/vaccines` adresini doğrudan açtığınızda 404 alırsınız. Vercel ve Netlify bunu Vite projelerinde otomatik yapar; kendi sunucunuzda `try_files $uri /index.html;` benzeri bir kural ekleyin.
+> **Önemli:** İstemci tarafı yönlendirme kullanıldığı için, sunucunun tüm istekleri `index.html`'e yönlendirmesi gerekir. Aksi halde `/vaccines` adresini doğrudan açtığınızda, sayfayı yenilediğinizde ya da PWA kısayolundan girdiğinizde 404 alırsınız. Vercel için bu kural depodaki `vercel.json` dosyasındadır; Netlify'da `_redirects` içine `/* /index.html 200`, kendi sunucunuzda `try_files $uri /index.html;` benzeri bir kural ekleyin.
 
 ---
 
@@ -369,7 +417,8 @@ Uygulama tamamen statiktir; `npm run build` sonrası `dist/` klasörü herhangi 
 
 - [ ] Service Worker ile çevrimdışı destek
 - [ ] Aşı hatırlatma bildirimleri
-- [ ] Kuaför ziyaret geçmişi (tek tarih yerine liste)
+- [x] Kuaför ziyaret geçmişi (tek tarih yerine liste)
+- [x] Aşılarda otomatik sonraki doz ve hızlı kayıt
 - [ ] Fotoğraf galerisi
 - [ ] Kilo takibi grafiği
 - [ ] Verileri tarayıcıda düzenleme (şu an kod içinde)
